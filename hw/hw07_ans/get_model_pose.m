@@ -1,15 +1,14 @@
 function pose = get_model_pose(model_name,optns)
 %--------------------------------------------------------------------------
 % getModels
-% This method will create a service client that talks to Gazebo's
+% This method will create an action client that talks to Gazebo's
 % get_model_state action server to retrieve the pose of a given model_name wrt to the world.
 %
 % Inputs
-%   - model_name (string): name of existing model in Gazebo
-%   - optns      (dictionary ): dictionary with different key-value pairs
+% model_name (string): name of existing model in Gazebo
 %
 % Ouput
-%   - pose (gazebo_msgs/GetModelStateResponse): contains Pose and Twist
+% models (gazebo_msgs/GetModelStateResponse): contains Pose and Twist
 % structures
 %--------------------------------------------------------------------------
 

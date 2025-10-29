@@ -7,8 +7,8 @@ rosshutdown;
 pause(2);       
 
 %% Set IP address for master and node:
-masterHostIP % **Complete Code**
-nodeHostIP = % **Complete Code**
+masterHostIP = "10.52.53.249";
+nodeHostIP = "10.52.50.146"
 rosinit(masterHostIP, 11311, "NodeHost",nodeHostIP);
 
 %% ROS Class handle
@@ -28,8 +28,9 @@ disp("Creating dictionary...");
 optns = dictionary(keys,values);  
 
 %% 02 Reset the simulation
+
 disp('Resetting the world...');
-% **Complete Code**      % reset models through a gazebo service
+resetWorld(optns);      % reset models through a gazebo service
 
 %% 03 Get Model Poses
 
@@ -40,9 +41,16 @@ disp('Getting object goal pose(s)...')
 models = getModels(optns);
 
 % Number of models to pick (you can hard code or randomize)
-n = length(models.ModelNames);
+n = 1; % n = randi([3 25]);, % n=25
 
+% Manual Specification of fixed objects (may change from year-to-year)
+rCan1 = [0.4, -0.5, 0.14, -pi/2, -pi 0];
+rCan2 = [0.018, 0.66, 0.25, -pi/2, -pi 0];
+rCan3 = [0.8, -0.03, 0.15, -pi/2, -pi, 0];
+model_pos = [rCan1;rCan2;rCan3];
 
+% Bin locations
+greenBin = [-0.4, -0.45, 0.25, -pi/2, -pi 0];
 
 %% 04 Get the poses
 % Create a loop to do:
@@ -60,21 +68,22 @@ if strcmp(type,'gazebo')
 
         %% 05.1 Get Model Pose
         
-        % 05.1.1 Get Model Name for random value between 23 and 31
-        % **Complete Code**
+        % 05.1.1 Get Model Name
+        model_name = models.ModelNames{23+randi([7,8])};
 
         % 05.1.2 Get Model pose
         fprintf('Picking up model: %s \n',model_name);
 
         % Get the pose and print only the position. 
-        % **Complete Code**
+        pose = get_model_pose(model_name,optns);
 
         % Print the ROS position for the model
         fprintf("The pose position (xyz) is: [ %0.2f, %0.2f, %0.2f ]\n", ...
-        % **Complete Code**
+            pose.Pose.Position.X,...
+            pose.Pose.Position.Y,...
+            pose.Pose.Position.Z);
 
         % Print the ROS quaternion for the model xyzw
         fprintf("The pose quaternion (xyzw) is: [ %0.2f, %0.2f, %0.2f, %0.2f ]\n", ...
-        % **Complete Code**
     end
 end
