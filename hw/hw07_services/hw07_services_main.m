@@ -37,7 +37,7 @@ type = 'gazebo'; % gazebo, ptcloud, cam, manual
 disp('Getting object goal pose(s)...')
 
 % Get models from Gazebo
-models = getModels(optns);
+% **Complete Code**      % Get all model names via service
 
 % Number of models to pick (you can hard code or randomize)
 n = length(models.ModelNames);
@@ -46,8 +46,8 @@ n = length(models.ModelNames);
 
 %% 04 Get the poses
 % Create a loop to do:
-%   1. Get model pose in homogenous transformation format,
-%   5. Go home
+%   1. Get model pose in homogenous transformation format
+%   2. Display it on screen
 
 % Set the rate at which this loop should run
 rate = rosrate(10);
@@ -60,14 +60,11 @@ if strcmp(type,'gazebo')
 
         %% 05.1 Get Model Pose
         
-        % 05.1.1 Get Model Name for random value between 23 and 31
+        % 05.1.1 Get Model Name for each of the models
         % **Complete Code**
 
         % 05.1.2 Get Model pose
         fprintf('Picking up model: %s \n',model_name);
-
-        % Get the pose and print only the position. 
-        % **Complete Code**
 
         % Print the ROS position for the model
         fprintf("The pose position (xyz) is: [ %0.2f, %0.2f, %0.2f ]\n", ...
@@ -76,5 +73,8 @@ if strcmp(type,'gazebo')
         % Print the ROS quaternion for the model xyzw
         fprintf("The pose quaternion (xyzw) is: [ %0.2f, %0.2f, %0.2f, %0.2f ]\n", ...
         % **Complete Code**
+
+        % Create some space for next item.
+        fprintf("\n\n")
     end
 end
