@@ -14,13 +14,13 @@ function pose = get_model_pose(model_name,optns)
 %--------------------------------------------------------------------------
 
 % 01 Get robot handle
-r = optns{'rHandle'};
+% **Complete Code**
 
 % 02 Create model_client_msg
-get_models_sate_client_msg = rosmessage(r.get_models_state_client);
+% **Complete Code**
 
 % 03 Populate message with model name
-get_models_sate_client_msg.ModelName = model_name;
+% **Complete Code**
 
 % 04 Call client 
 try
