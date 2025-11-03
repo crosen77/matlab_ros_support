@@ -9,10 +9,10 @@ function resetWorld(optns)
     
     % TODO: 01 Get robot handle
     % **Complete Code**
-    
+    r = optns{'rHandle'};
     % TODO: 02 Create Empty Simulation message
     % **Complete Code**
-    
+    reset_msg = rosmessage(r.res_client);
     % TODO: 03 Call reset service
-    
+    call(r.res_client, reset_msg);
 end

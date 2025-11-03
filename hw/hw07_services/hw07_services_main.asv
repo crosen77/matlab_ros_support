@@ -7,8 +7,8 @@ rosshutdown;
 pause(2);       
 
 %% Set IP address for master and node:
-masterHostIP = '192.168.86.236'; %'10.51.59.237'; % 192.168.86.234 **Complete Code**
-nodeHostIP = '192.168.86.234'; %'10.51.83.77'; % 192.168.86.236 *Complete Code** 
+masterHostIP = '10.51.59.237'; % **Complete Code**
+nodeHostIP = '10.51.83.77'; % **Complete Code**
 rosinit(masterHostIP, 11311, "NodeHost",nodeHostIP);
 
 %% ROS Class handle
@@ -65,11 +65,9 @@ if strcmp(type,'gazebo')
         model_name = models.ModelNames{i};
         % 05.1.2 Get Model pose
         fprintf('Picking up model: %s \n',model_name);
-        
+
         % Print the ROS position for the model
         % **Complete Code**
-        pose = get_model_pose(model_name,optns);
-
         fprintf("The pose position (xyz) is: [ %0.2f, %0.2f, %0.2f ]\n", ...
                 pose.Pose.Position.X, ...
                 pose.Pose.Position.Y, ...
@@ -77,10 +75,10 @@ if strcmp(type,'gazebo')
         % Print the ROS quaternion for the model xyzw
         % **Complete Code**
         fprintf("The pose quaternion (xyzw) is: [ %0.2f, %0.2f, %0.2f, %0.2f ]\n", ...
-                pose.Pose.Orientation.X, ...
-                pose.Pose.Orientation.Y, ...
-                pose.Pose.Orientation.Z, ...
-                pose.Pose.Orientation.W);
+                pose.Orientation.X, ...
+                pose.Orientation.Y, ...
+                pose.Orientation.Z, ...
+                pose.Orientation.W);
         % Create some space for next item.
         fprintf("\n\n")
     end
