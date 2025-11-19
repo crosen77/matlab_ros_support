@@ -49,7 +49,10 @@ disp('Getting object goal pose(s)...')
 models = getModels(optns);
 
 % Number of models to pick (you can hard code or randomize)
-n = 1; % n = randi([3 25]);
+% n = 3; % n = randi([3 25]);
+% Hard code models that work and their zOffset values
+pick_idx = [7 8 2 4 9 10 11];
+zOffsetValues = [0.08 0.08 0.06 0.1 0.06 0.08 0.06];
 
 % Bin locations
 greenBin = [-0.4, -0.45, 0.25, -pi/2, -pi 0];
@@ -68,12 +71,12 @@ rate = rosrate(10);
 if strcmp(type,'gazebo')
 
     % For n models to pick up
-    for i=1:n
+    for i=1:size(pick_idx, 2)
 
         %% 05.1 Get Model Pose
         
         % 05.1.1 Get Model Name (23 is the starting index for graspable objects).
-        model_name = models.ModelNames{23+i};
+        model_name = models.ModelNames{23+pick_idx(i)};
 
         % 05.1.2 Get Model pose
         fprintf('Picking up model: %s \n',model_name);
@@ -82,7 +85,7 @@ if strcmp(type,'gazebo')
        
         % 05.2 Pick Model
         strategy = 'topdown';               % Assign strategy: topdown, direct
-        ret = pick(strategy, mat_R_T_M,optns); % Can have optional starting opse for ctraj like: ret = pick(strategy, mat_R_T_M,mat_R_T_G);
+        ret = pick(strategy, mat_R_T_M,optns, zOffsetValues(i)); % Can have optional starting opse for ctraj like: ret = pick(strategy, mat_R_T_M,mat_R_T_G);
         
         % 05.3 Place
         if ~ret   % If no errors, continue to place in bin       
@@ -94,13 +97,14 @@ if strcmp(type,'gazebo')
             disp('Attempting to place in bin...')
             strategy = 'topdown';            
             ret = moveToBin(strategy,mat_R_T_M,place_pose,optns);
+            
         end
 
         % 05.4 Return to home
         if ~ret     % If no errors
 
             % Move to ready position
-            ret = moveToQ('qr');
+            ret = moveToQ('qr', optns);
         end
 
         % Control loop

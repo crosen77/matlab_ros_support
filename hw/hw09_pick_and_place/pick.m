@@ -1,4 +1,4 @@
-function grip_result = pick(strategy,objectData,optns)
+function grip_result = pick(strategy,objectData,optns, zOffset)
     %----------------------------------------------------------------------
     % pick 
     % Top-level function to executed a complete pick. 
@@ -31,23 +31,30 @@ function grip_result = pick(strategy,objectData,optns)
 
     %% 1) Determine z offset and grip distance required
     %   z offset includes offset for both the base and the gripper
+    if nargin < 4
         if strcmp(string(label), "pouch")
             zOffset = 0.145;
             doGripValue = 0.62;
         elseif strcmp(string(label), "can")
-            zOffset = 0.1;
+            zOffset = 0.0;
             doGripValue = 0.24;
         elseif strcmp(string(label), "bottle")
             zOffset = 0.12;
             doGripValue = 0.36;
         end
+    else
+        doGripValue = 0.233;
+    end
 
     %% 2) Move to desired location
         % Account for base offset + Hover over object
         if strcmp(strategy,'topdown')
-            over_R_T_M = lift(mat_R_T_M,zOffset);
+            over_R_T_M = lift(mat_R_T_M,0.25+zOffset);
             MoveToOb = moveTo(over_R_T_M, optns);
             disp(over_R_T_M);
+
+            pick_R_T_M = lift(mat_R_T_M,zOffset);
+            MoveToOb = moveTo(pick_R_T_M, optns);
         
         elseif strcmpi(strategy,'direct')
             traj_result = moveTo(mat_R_T_M,optns);
@@ -55,4 +62,5 @@ function grip_result = pick(strategy,objectData,optns)
         % Grip object
         [grip_result,grip_state] = doGrip('pick',optns,doGripValue); 
         grip_result = grip_result.ErrorCode;
+
 end
