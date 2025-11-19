@@ -10,6 +10,7 @@ function resetWorld(optns)
     disp('Resetting the world...');
     
     % TODO: 01 Get robot handle
+
     r = optns{"rHandle"};
     
     % TODO: 02 Create Empty Simulation message

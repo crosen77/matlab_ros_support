@@ -69,7 +69,7 @@ classdef rosClassHandle_UR5e
             
             % Robot
             r.UR5eROBOT               = loadrobot("universalUR5e", "DataFormat", "row");
-            r.UR5eROBOT               = urdfAdjustment(r.UR5eROBOT,"UR5e",0);
+            %r.UR5eROBOT               = urdfAdjustment(r.UR5eROBOT,"UR5e",0);
             r.initialRobotJConfig     = [0,0,0,0,0,0];
 
             % IKs

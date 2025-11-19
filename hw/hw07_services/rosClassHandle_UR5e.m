@@ -71,6 +71,7 @@ classdef rosClassHandle_UR5e
             r.UR5eROBOT               = loadrobot("universalUR5e", "DataFormat", "row");
             %r.UR5eROBOT              = urdfAdjustment(r.UR5eROBOT,"UR5e",0);
             % Commented out because I don't think it's a function we have access to.
+
             r.initialRobotJConfig     = [0,0,0,0,0,0];
 
             % IKs
@@ -86,7 +87,9 @@ classdef rosClassHandle_UR5e
             r.pt_cloud_sub            = rossubscriber('/camera/depth/points','DataFormat','struct');
             
             % Yolo Neural Network
+
             %r.general_detector        = load("./vision_tutorials/detectors/detector_gral_sim.mat");   
+
         end
 
     end
